@@ -41,7 +41,6 @@ body {
   }
 }
 
-
 /* --- CARD UNIFORM STYLING --- */
 .card {
   height: 400px; /* fixed total height */
@@ -97,6 +96,3 @@ body {
 #global-news .card-img-top {
   height: 140px;
 }
-
-
-

@@ -8,7 +8,8 @@ export async function getLocalNews(countryCode = "us") {
   if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
 
   const json = await res.json();
-  if (json.error) throw new Error(json.error.info || JSON.stringify(json.error));
+  if (json.error)
+    throw new Error(json.error.info || JSON.stringify(json.error));
 
   return json.data; // Mediastack returns articles under "data"
 }

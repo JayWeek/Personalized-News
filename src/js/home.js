@@ -5,8 +5,12 @@ import { getGlobalNews } from "../js/api/newsapi.js";
 
 // Load header and footer
 async function loadPartials() {
-  const header = await fetch("./partials/header.html").then((res) => res.text());
-  const footer = await fetch("./partials/footer.html").then((res) => res.text());
+  const header = await fetch("./partials/header.html").then((res) =>
+    res.text(),
+  );
+  const footer = await fetch("./partials/footer.html").then((res) =>
+    res.text(),
+  );
   document.getElementById("header").innerHTML = header;
   document.getElementById("footer").innerHTML = footer;
 }
@@ -16,13 +20,16 @@ function renderHeadline(article) {
   const headline = document.getElementById("headline");
 
   // Fix: ensure fallback image works even if image property is empty or invalid
-  let imageUrl = article.image && article.image.trim() !== "" ? article.image : "https://placehold.co/600x400";
+  let imageUrl =
+    article.image && article.image.trim() !== ""
+      ? article.image
+      : "https://placehold.co/600x400";
 
   headline.innerHTML = `
     <div class="position-relative overflow-hidden rounded shadow-sm">
       <img 
         src="${imageUrl}" 
-        alt="${article.title || 'Headline image'}" 
+        alt="${article.title}" 
         class="img-fluid w-100 headline-img" 
         style="object-fit: cover; height: 400px;" 
         onerror="this.onerror=null; this.src='https://placehold.co/600x400';"
@@ -115,7 +122,7 @@ async function init() {
   try {
     // 1️⃣ Detect user location
     // const location = await getUserLocation();
-    const countryCode = "us" //location.country_code;
+    const countryCode = "us"; //location.country_code;
 
     // 2️⃣ Fetch data
     const localNews = await getLocalNews(countryCode, 12);

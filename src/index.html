@@ -1,5 +1,5 @@
 <!-- src/index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,55 +17,56 @@
   </head>
 
   <body>
-  <header id="header"></header>
+    <header id="header"></header>
 
-  <main class="container-fluid py-4">
-    <div class="row">
-      <!-- LEFT COLUMN (Local News) -->
-      <div class="col-lg-9 col-md-12" id="main-left">
-        <div class="row mb-3">
-          <div class="col-12">
-            <h1 class="fw-bold mb-3">Local News</h1>
-          </div>
-        </div>
-
-        <!-- Headline Row -->
-        <div class="row mb-4">
-          <div class="col-12">
-            <div id="headline" class="p-4 bg-light rounded shadow-sm">
-              <h2 class="headline-title placeholder-glow">Loading headline...</h2>
-              <p class="headline-desc text-muted mt-2"></p>
+    <main class="container-fluid py-4">
+      <div class="row">
+        <!-- LEFT COLUMN (Local News) -->
+        <div class="col-lg-9 col-md-12" id="main-left">
+          <div class="row mb-3">
+            <div class="col-12">
+              <h1 class="fw-bold mb-3">Local News</h1>
             </div>
           </div>
-        </div>
 
-        <!-- Local News Cards Grid -->
-        <div class="row g-3" id="local-news"></div>
-      </div>
-
-      <!-- RIGHT COLUMN (Global News) -->
-      <div class="col-lg-3 col-md-12" id="main-right">
-        <div class="row mb-3">
-          <div class="col-12">
-            <h1 class="fw-bold mb-3">Global News</h1>
+          <!-- Headline Row -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div id="headline" class="p-4 bg-light rounded shadow-sm">
+                <h2 class="headline-title placeholder-glow">
+                  Loading headline...
+                </h2>
+                <p class="headline-desc text-muted mt-2"></p>
+              </div>
+            </div>
           </div>
+
+          <!-- Local News Cards Grid -->
+          <div class="row g-3" id="local-news"></div>
         </div>
 
-        <div class="row g-3" id="global-news"></div>
+        <!-- RIGHT COLUMN (Global News) -->
+        <div class="col-lg-3 col-md-12" id="main-right">
+          <div class="row mb-3">
+            <div class="col-12">
+              <h1 class="fw-bold mb-3">Global News</h1>
+            </div>
+          </div>
+
+          <div class="row g-3" id="global-news"></div>
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <footer id="footer"></footer>
+    <footer id="footer"></footer>
 
-  <!-- Bootstrap JS Bundle -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"
-  ></script>
+    <!-- Bootstrap JS Bundle -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
 
-  <script type="module" src="./js/home.js"></script>
-</body>
-
+    <script type="module" src="./js/home.js"></script>
+  </body>
 </html>

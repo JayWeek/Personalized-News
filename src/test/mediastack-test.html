@@ -1,39 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mediastack API Test</title>
-  <link rel="stylesheet" href="../public/css/mediastack-test.css" />
-</head>
-<body>
-  <h1>Mediastack News Test</h1>
-  <div id="news-grid" class="news-grid"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mediastack API Test</title>
+    <link rel="stylesheet" href="../public/css/mediastack-test.css" />
+  </head>
+  <body>
+    <h1>Mediastack News Test</h1>
+    <div id="news-grid" class="news-grid"></div>
 
-  <script type="module">
-    import { fetchCountryNews } from "../js/api/mediastack.js";
+    <script type="module">
+      import { fetchCountryNews } from "../js/api/mediastack.js";
 
-    async function displayNews() {
-      try {
-        const articles = await fetchCountryNews("ng"); // test Kenya (change country code)
-        const container = document.getElementById("news-grid");
-        container.innerHTML = articles.map(a => `
+      async function displayNews() {
+        try {
+          const articles = await fetchCountryNews("ng"); // test Kenya (change country code)
+          const container = document.getElementById("news-grid");
+          container.innerHTML = articles
+            .map(
+              (a) => `
           <div class="news-card">
-            <img src="${a.image || 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'}" alt="">
+            <img src="${a.image || "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"}" alt="">
             <h3>${a.title}</h3>
-            <p>${a.description || ''}</p>
-            <p>${a.category || ''}</p>
-            <p><strong>${a.source}</strong> • ${a.published_at?.slice(0, 10) || ''}</p>
+            <p>${a.description || ""}</p>
+            <p>${a.category || ""}</p>
+            <p><strong>${a.source}</strong> • ${a.published_at?.slice(0, 10) || ""}</p>
             <a href="${a.url}" target="_blank">Read More</a>
           </div>
-        `).join('');
-      } catch (err) {
-        console.error("Mediastack error:", err);
-        document.getElementById("news-grid").textContent = err.message;
+        `,
+            )
+            .join("");
+        } catch (err) {
+          console.error("Mediastack error:", err);
+          document.getElementById("news-grid").textContent = err.message;
+        }
       }
-    }
 
-    displayNews();
-  </script>
-</body>
+      displayNews();
+    </script>
+  </body>
 </html>
