@@ -126,8 +126,17 @@ async function init() {
   setTimeout(async () => {
     // Load initial data
     await loadLocalNewsByCategory();
-    const globalNews = await getGlobalNews();
+    // Fetch global news via Netlify Function proxy to avoid HTTP 426
+    let globalNews = [];
+    try {
+      const res = await fetch("/.netlify/functions/newsapi");
+      const data = await res.json();
+      globalNews = data.articles || [];
+    } catch (err) {
+      console.error("Failed to load global news via Netlify Function:", err);
+    }
     renderGlobalNews(globalNews);
+
 
     // 🗂 Category click
     document.querySelectorAll(".category-link").forEach((link) => {
