@@ -1,6 +1,7 @@
 import { getUserLocation } from "../js/api/ipstack.js";
 import { getLocalNews } from "../js/api/mediastack.js";
-import { getGlobalNews } from "../js/api/newsapi.js";
+import { getGlobalNews } from "../js/api/mediastack.js";
+
 
 // Load header/footer
 async function loadPartials() {
@@ -66,20 +67,32 @@ function renderLocalNews(articles) {
   });
 }
 
-// ✅ Render Global News (unchanged)
+//  Render Global News 
 function renderGlobalNews(articles) {
   const globalNews = document.getElementById("global-news");
   globalNews.innerHTML = "";
+
   const limited = articles.slice(0, 3);
   limited.forEach((article) => {
+    const img =
+      article.image ||
+      article.urlToImage ||
+      article.image_url ||
+      "./assets/placeholder.jpg";
+
+    const description =
+      article.description ||
+      article.title ||
+      "Click below to read the full story.";
+
     const row = document.createElement("div");
     row.className = "col-12";
     row.innerHTML = `
       <div class="card shadow-sm h-100">
-        <img src="${article.urlToImage || "./assets/placeholder.jpg"}" class="card-img-top" alt="${article.title}">
+        <img src="${img}" class="card-img-top" alt="${article.title}">
         <div class="card-body">
           <h6 class="card-title">${article.title}</h6>
-          <p class="card-text">${article.description || ""}</p>
+          <p class="card-text">${description}</p>
           <a href="${article.url}" target="_blank" class="btn btn-sm btn-outline-secondary mt-2">Read</a>
         </div>
       </div>
@@ -87,6 +100,7 @@ function renderGlobalNews(articles) {
     globalNews.appendChild(row);
   });
 }
+
 
 // ✅ Load category or search results dynamically
 async function loadLocalNewsByCategory(category = null, query = null) {
@@ -127,16 +141,13 @@ async function init() {
     // Load initial data
     await loadLocalNewsByCategory();
     // Fetch global news via Netlify Function proxy to avoid HTTP 426
-    let globalNews = [];
+    // ✅ Fetch global news directly from Mediastack
     try {
-      const res = await fetch("/.netlify/functions/newsapi");
-      const data = await res.json();
-      globalNews = data.articles || [];
+      const globalNews = await getGlobalNews(6);
+      renderGlobalNews(globalNews);
     } catch (err) {
-      console.error("Failed to load global news via Netlify Function:", err);
+      console.error("Failed to load global news:", err);
     }
-    renderGlobalNews(globalNews);
-
 
     // 🗂 Category click
     document.querySelectorAll(".category-link").forEach((link) => {
