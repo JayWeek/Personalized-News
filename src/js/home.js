@@ -193,7 +193,7 @@ document.addEventListener("click", (e) => {
     const article = JSON.parse(decodeURIComponent(raw));
     localStorage.setItem("currentArticle", JSON.stringify(article));
     // article detail page relative to src/ folder
-    window.location.href = "/article_detail_page/article.html";
+    window.location.href = "./article_detail_page/article.html";
   } catch (err) {
     console.error("Failed to open article", err);
   }
