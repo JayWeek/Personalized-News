@@ -77,12 +77,23 @@ function renderLocalNews(articles) {
   });
 }
 
-//  Render Global News
+//  Render Global News (now deduplicated)
 function renderGlobalNews(articles) {
   const globalNews = document.getElementById("global-news");
   globalNews.innerHTML = "";
 
-  const limited = articles.slice(0, 3);
+  // Deduplicate by title or URL
+  const seen = new Set();
+  const uniqueArticles = articles.filter((a) => {
+    const key = a.title?.trim().toLowerCase() || a.url;
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  // Limit to first 3 unique ones
+  const limited = uniqueArticles.slice(0, 3);
+
   limited.forEach((article) => {
     const img =
       article.image ||
@@ -111,7 +122,8 @@ function renderGlobalNews(articles) {
   });
 }
 
-// ✅ Load category or search results dynamically
+
+// Load category or search results dynamically
 async function loadLocalNewsByCategory(category = null, query = null) {
   try {
     updateLocalTitle("Loading...");
