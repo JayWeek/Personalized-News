@@ -82,7 +82,7 @@ function loadSaved() {
       const idx = Number(btn.dataset.index);
       localStorage.setItem("currentArticle", JSON.stringify(saved[idx]));
       // redirect to article detail page
-      window.location.href = "../article_detail_page/article.html";
+      window.location.href = "/article_detail_page/article.html";
     });
   });
 }
