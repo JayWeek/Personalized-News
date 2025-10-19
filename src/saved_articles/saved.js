@@ -1,7 +1,11 @@
 // saved.js - placed in src/saved_articles/saved.js
 async function loadPartials() {
-  const header = await fetch("../public/partials/header.html").then(r => r.text());
-  const footer = await fetch("../public/partials/footer.html").then(r => r.text());
+  const header = await fetch("../public/partials/header.html").then((r) =>
+    r.text(),
+  );
+  const footer = await fetch("../public/partials/footer.html").then((r) =>
+    r.text(),
+  );
   document.getElementById("header").innerHTML = header;
   document.getElementById("footer").innerHTML = footer;
 }
@@ -17,10 +21,10 @@ function renderCard(article, index) {
     article.image_url ||
     "https://placehold.co/600x400?text=No+Image";
   const title = article.title || "Untitled";
-  const desc = article.description
-    // ? article.description.slice(0, 200) +
-    //   (article.description.length > 200 ? "..." : "")
-    // : "";
+  const desc = article.description;
+  // ? article.description.slice(0, 200) +
+  //   (article.description.length > 200 ? "..." : "")
+  // : "";
 
   return `
     <div class="col-12 col-md-6 col-lg-4 mb-4">
@@ -51,7 +55,6 @@ function renderCard(article, index) {
   `;
 }
 
-
 function loadSaved() {
   const container = document.getElementById("saved-list");
   let saved = [];
@@ -61,11 +64,12 @@ function loadSaved() {
     saved = [];
   }
   if (!saved.length) {
-    container.innerHTML = "<div class=\"col-12\"><div class=\"alert alert-info\">No saved articles yet.</div></div>";
+    container.innerHTML =
+      "<div class=\"col-12\"><div class=\"alert alert-info\">No saved articles yet.</div></div>";
     return;
   }
   container.innerHTML = saved.map((a, i) => renderCard(a, i)).join("");
-  Array.from(document.getElementsByClassName("remove-saved")).forEach(btn => {
+  Array.from(document.getElementsByClassName("remove-saved")).forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const idx = Number(btn.dataset.index);
       saved.splice(idx, 1);
@@ -73,7 +77,7 @@ function loadSaved() {
       loadSaved();
     });
   });
-  Array.from(document.getElementsByClassName("read-saved")).forEach(btn => {
+  Array.from(document.getElementsByClassName("read-saved")).forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const idx = Number(btn.dataset.index);
       localStorage.setItem("currentArticle", JSON.stringify(saved[idx]));

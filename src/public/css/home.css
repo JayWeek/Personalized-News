@@ -41,7 +41,6 @@ body {
   }
 }
 
-
 /* --- CARD FLEXIBLE STYLING --- */
 .card {
   overflow: visible;
@@ -65,7 +64,6 @@ body {
   padding: 1rem;
 }
 
-
 .card-title {
   font-size: 1rem;
   font-weight: 600;
@@ -78,9 +76,8 @@ body {
   color: #555;
   margin-bottom: 0.5rem;
   white-space: normal; /* ✅ allow wrapping */
-  overflow: visible;   /* ✅ no truncation */
+  overflow: visible; /* ✅ no truncation */
 }
-
 
 /* --- BUTTON ALIGNMENT --- */
 .card .btn {
@@ -95,7 +92,6 @@ body {
 #global-news .card-img-top {
   height: 140px;
 }
-
 
 /* --- ANIMATION: FADE-IN EFFECT --- */
 @keyframes fadeIn {
@@ -120,4 +116,3 @@ body {
   transform: scale(1.02);
   transition: transform 0.3s ease;
 }
-

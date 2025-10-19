@@ -2,11 +2,14 @@ import { getUserLocation } from "../js/api/ipstack.js";
 import { getLocalNews } from "../js/api/mediastack.js";
 import { getGlobalNews } from "../js/api/mediastack.js";
 
-
 // Load header/footer
 async function loadPartials() {
-  const header = await fetch("./partials/header.html").then((res) => res.text());
-  const footer = await fetch("./partials/footer.html").then((res) => res.text());
+  const header = await fetch("./partials/header.html").then((res) =>
+    res.text(),
+  );
+  const footer = await fetch("./partials/footer.html").then((res) =>
+    res.text(),
+  );
   document.getElementById("header").innerHTML = header;
   document.getElementById("footer").innerHTML = footer;
 }
@@ -19,11 +22,14 @@ function updateLocalTitle(titleText) {
   if (mainHeading) mainHeading.textContent = titleText;
 }
 
-
 // ✅ Render Headline (unchanged except fallback image fix)
 function renderHeadline(article) {
   const headline = document.getElementById("headline");
-  const imageUrl = article.urlToImage || article.image || article.image_url || "https://placehold.co/600x400?text=No+Image";
+  const imageUrl =
+    article.urlToImage ||
+    article.image ||
+    article.image_url ||
+    "https://placehold.co/600x400?text=No+Image";
   headline.innerHTML = `
     <div class="position-relative overflow-hidden rounded shadow-sm" style="min-height:400px;">
       <img src="${imageUrl}" alt="${article.title}" class="img-fluid w-100 headline-img" style="object-fit:cover;height:400px;">
@@ -51,7 +57,11 @@ function renderLocalNews(articles) {
   limited.forEach((article) => {
     const col = document.createElement("div");
     col.className = "col-lg-3 col-md-6 col-sm-12";
-    const img = article.urlToImage || article.image || article.image_url || "https://placehold.co/600x400?text=No+Image";
+    const img =
+      article.urlToImage ||
+      article.image ||
+      article.image_url ||
+      "https://placehold.co/600x400?text=No+Image";
     col.innerHTML = `
       <div class="card h-100 shadow-sm" style="height:420px;">
         <img src="${img}" class="card-img-top" alt="${article.title}" style="height:180px;object-fit:cover;">
@@ -67,7 +77,7 @@ function renderLocalNews(articles) {
   });
 }
 
-//  Render Global News 
+//  Render Global News
 function renderGlobalNews(articles) {
   const globalNews = document.getElementById("global-news");
   globalNews.innerHTML = "";
@@ -101,7 +111,6 @@ function renderGlobalNews(articles) {
   });
 }
 
-
 // ✅ Load category or search results dynamically
 async function loadLocalNewsByCategory(category = null, query = null) {
   try {
@@ -114,7 +123,9 @@ async function loadLocalNewsByCategory(category = null, query = null) {
     } else if (category) {
       // 🗂 Category
       articles = await getLocalNews("us", 9, category);
-      updateLocalTitle(`Trending in ${category.charAt(0).toUpperCase() + category.slice(1)}`);
+      updateLocalTitle(
+        `Trending in ${category.charAt(0).toUpperCase() + category.slice(1)}`,
+      );
     } else {
       // Default local
       const location = await getUserLocation();
@@ -126,7 +137,8 @@ async function loadLocalNewsByCategory(category = null, query = null) {
       renderHeadline(articles[0]);
       renderLocalNews(articles.slice(1));
     } else {
-      document.getElementById("local-news").innerHTML = "<p>No articles found.</p>";
+      document.getElementById("local-news").innerHTML =
+        "<p>No articles found.</p>";
     }
   } catch (err) {
     console.error("Error loading local news:", err);
@@ -186,4 +198,3 @@ document.addEventListener("click", (e) => {
     console.error("Failed to open article", err);
   }
 });
-

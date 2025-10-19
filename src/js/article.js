@@ -3,8 +3,12 @@
 // renders the article and provides "Save for Later".
 
 async function loadPartials() {
-  const header = await fetch("../public/partials/header.html").then(r => r.text());
-  const footer = await fetch("../public/partials/footer.html").then(r => r.text());
+  const header = await fetch("../public/partials/header.html").then((r) =>
+    r.text(),
+  );
+  const footer = await fetch("../public/partials/footer.html").then((r) =>
+    r.text(),
+  );
   document.getElementById("header").innerHTML = header;
   document.getElementById("footer").innerHTML = footer;
 }
@@ -17,7 +21,11 @@ function fallbackImage() {
 function isSaved(article) {
   try {
     const saved = JSON.parse(localStorage.getItem("savedArticles") || "[]");
-    return saved.some(a => (a.url && article.url && a.url === article.url) || (a.title === article.title));
+    return saved.some(
+      (a) =>
+        (a.url && article.url && a.url === article.url) ||
+        a.title === article.title,
+    );
   } catch (e) {
     return false;
   }
@@ -31,12 +39,16 @@ function markSavedButton(btn) {
 }
 
 function createArticleHTML(article) {
-  const image = article.urlToImage || article.image || article.image_url || fallbackImage();
-  const published = (article.publishedAt || article.published) ? new Date(article.publishedAt || article.published).toLocaleString() : "";
+  const image =
+    article.urlToImage || article.image || article.image_url || fallbackImage();
+  const published =
+    article.publishedAt || article.published
+      ? new Date(article.publishedAt || article.published).toLocaleString()
+      : "";
   return `
     <div class="col-12">
       <div class="card mb-3 shadow-sm">
-        <img src="${image}" alt="${(article.title || "Article")}" class="card-img-top article-detail">
+        <img src="${image}" alt="${article.title || "Article"}" class="card-img-top article-detail">
         <div class="card-body">
           <h1 class="card-title">${article.title || ""}</h1>
           <p class="text-muted mb-2">${article.source?.name || article.author || "Unknown Source"} ${published ? "• " + published : ""}</p>
@@ -68,11 +80,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     article = JSON.parse(raw);
   } catch (e) {
-    document.getElementById("article-detail").innerHTML = `<div class="alert alert-danger">Error reading article.</div>`;
+    document.getElementById("article-detail").innerHTML =
+      `<div class="alert alert-danger">Error reading article.</div>`;
     return;
   }
 
-  document.getElementById("article-detail").innerHTML = createArticleHTML(article);
+  document.getElementById("article-detail").innerHTML =
+    createArticleHTML(article);
 
   const btn = document.getElementById("save-article-btn");
   if (isSaved(article)) {
@@ -82,7 +96,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   btn.addEventListener("click", () => {
     try {
       const saved = JSON.parse(localStorage.getItem("savedArticles") || "[]");
-      const exists = saved.some(a => (a.url && article.url && a.url === article.url) || (a.title === article.title));
+      const exists = saved.some(
+        (a) =>
+          (a.url && article.url && a.url === article.url) ||
+          a.title === article.title,
+      );
       if (!exists) {
         saved.unshift(article); // newest first
         localStorage.setItem("savedArticles", JSON.stringify(saved));

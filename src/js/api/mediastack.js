@@ -17,16 +17,16 @@ export async function getLocalNews(country = "us", limit = 9, filter = null) {
     }
   }
 
-// Use user’s location if available
-let resolvedCountry = country;
+  // Use user’s location if available
+  let resolvedCountry = country;
 
-if (!resolvedCountry) {
-  const loc = await getUserLocation();
-  resolvedCountry = loc?.country_code?.toLowerCase() || "us";
-}
+  if (!resolvedCountry) {
+    const loc = await getUserLocation();
+    resolvedCountry = loc?.country_code?.toLowerCase() || "us";
+  }
 
-// Construct the API URL
-const url = `https://api.mediastack.com/v1/news?access_key=${key}&countries=${resolvedCountry.toLowerCase()}&limit=${limit}${categoryParam}${queryParam}`;
+  // Construct the API URL
+  const url = `https://api.mediastack.com/v1/news?access_key=${key}&countries=${resolvedCountry.toLowerCase()}&limit=${limit}${categoryParam}${queryParam}`;
 
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Mediastack HTTP ${res.status}`);
@@ -37,7 +37,7 @@ const url = `https://api.mediastack.com/v1/news?access_key=${key}&countries=${re
 
   // Filter out any incomplete articles
   const articles = data.data.filter(
-    (a) => a.title && a.url && a.source && a.category
+    (a) => a.title && a.url && a.source && a.category,
   );
 
   return articles;
@@ -72,13 +72,13 @@ export async function getGlobalNews(limit = 9, filter = null) {
 
   const data = await res.json();
 
-  if (!data || !data.data) throw new Error("No global data returned from Mediastack");
+  if (!data || !data.data)
+    throw new Error("No global data returned from Mediastack");
 
   // Filter out incomplete articles
   const articles = data.data.filter(
-    (a) => a.title && a.url && a.source && a.category
+    (a) => a.title && a.url && a.source && a.category,
   );
 
   return articles;
 }
-
